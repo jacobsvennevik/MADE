@@ -1,5 +1,5 @@
 import numpy as np
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from made.manifolds import AbstractManifold
 from made import manifolds
@@ -121,7 +121,7 @@ class LineQAN(QAN):
     The network uses two offset CANs to track movement along the line.
     """
 
-    manifold: AbstractManifold = manifolds.Line()
+    manifold: AbstractManifold = field(default_factory=manifolds.Line)
     spacing: float = 0.075  # Spacing between neurons
     alpha: float = 3  # Sharpness of neural tuning curves
     sigma: float = 1  # Width of neural tuning curves
@@ -218,7 +218,7 @@ class RingQAN(QAN):
     Handles periodic boundary conditions at 0 and 2π.
     """
 
-    manifold: AbstractManifold = manifolds.Ring()
+    manifold: AbstractManifold = field(default_factory=manifolds.Ring)
     spacing: float = 0.075
     alpha: float = 3
     sigma: float = 1
@@ -330,7 +330,7 @@ class PlaneQAN(QAN):
     x and y directions independently.
     """
 
-    manifold: AbstractManifold = manifolds.Plane()
+    manifold: AbstractManifold = field(default_factory=manifolds.Plane)
     spacing: float = 0.065
     alpha: float = 3
     sigma: float = 1
@@ -425,7 +425,7 @@ class PlaneQAN(QAN):
 # ----------------------------------- Torus ---------------------------------- #
 @dataclass
 class TorusQAN(QAN):
-    manifold: AbstractManifold = manifolds.Torus()
+    manifold: AbstractManifold = field(default_factory=manifolds.Torus)
     spacing: float = 0.2
     alpha: float = 2.5
     sigma: float = 2
@@ -500,7 +500,7 @@ class CylinderQAN(QAN):
     and around the circumference. Handles periodic boundary conditions in the angular dimension.
     """
 
-    manifold: AbstractManifold = manifolds.Cylinder()
+    manifold: AbstractManifold = field(default_factory=manifolds.Cylinder)
     spacing: float = 0.2
     alpha: float = 2
     sigma: float = 1
@@ -617,7 +617,7 @@ class MobiusBandQAN(QAN):
     height flip when completing a full rotation.
     """
 
-    manifold: AbstractManifold = manifolds.MobiusBand()
+    manifold: AbstractManifold = field(default_factory=manifolds.MobiusBand)
     spacing: float = 0.15
     alpha: float = 2
     sigma: float = 2
@@ -737,7 +737,7 @@ class SphereQAN(QAN):
     in the tangent space of the sphere.
     """
 
-    manifold: AbstractManifold = manifolds.Sphere()
+    manifold: AbstractManifold = field(default_factory=manifolds.Sphere)
     spacing: float = 0.075
     alpha: float = 2.5
     sigma: float = 2.5

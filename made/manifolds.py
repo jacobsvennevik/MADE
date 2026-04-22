@@ -5,7 +5,7 @@ and their associated parameter spaces. Each manifold has a specific dimensionali
 parameter space, and metric for computing distances.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -274,10 +274,12 @@ class Line(AbstractManifold):
     """
 
     dim: int = 1
-    parameter_space: ParameterSpace = ParameterSpace(
-        [Range(0, 10, periodic=False)]
+    parameter_space: ParameterSpace = field(
+        default_factory=lambda: ParameterSpace(
+            [Range(0, 10, periodic=False)]
+        )
     )
-    metric: Metric = Euclidean(dim)
+    metric: Metric = field(default_factory=lambda: Euclidean(1))
 
 
 # ----------------------------------- ring ---------------------------------- #
@@ -289,10 +291,14 @@ class Ring(AbstractManifold):
     """
 
     dim: int = 1
-    parameter_space: ParameterSpace = ParameterSpace(
-        [Range(0, 2 * np.pi, periodic=True)]
+    parameter_space: ParameterSpace = field(
+        default_factory=lambda: ParameterSpace(
+            [Range(0, 2 * np.pi, periodic=True)]
+        )
     )
-    metric: Metric = PeriodicEuclidean(dim, periodic=[True])
+    metric: Metric = field(
+        default_factory=lambda: PeriodicEuclidean(1, periodic=[True])
+    )
 
 
 # ----------------------------------- plane ---------------------------------- #
@@ -304,10 +310,12 @@ class Plane(AbstractManifold):
     """
 
     dim: int = 2
-    parameter_space: ParameterSpace = ParameterSpace(
-        [Range(0, 2.5, periodic=False), Range(0, 2.5, periodic=False)]
+    parameter_space: ParameterSpace = field(
+        default_factory=lambda: ParameterSpace(
+            [Range(0, 2.5, periodic=False), Range(0, 2.5, periodic=False)]
+        )
     )
-    metric: Metric = Euclidean(dim)
+    metric: Metric = field(default_factory=lambda: Euclidean(2))
 
 
 # --------------------------------- cylinder --------------------------------- #
@@ -319,10 +327,14 @@ class Cylinder(AbstractManifold):
     """
 
     dim: int = 2
-    parameter_space: ParameterSpace = ParameterSpace(
-        [Range(0, 3, periodic=False), Range(0, 2 * np.pi, periodic=True)]
+    parameter_space: ParameterSpace = field(
+        default_factory=lambda: ParameterSpace(
+            [Range(0, 3, periodic=False), Range(0, 2 * np.pi, periodic=True)]
+        )
     )
-    metric: Metric = PeriodicEuclidean(dim, periodic=[False, True])
+    metric: Metric = field(
+        default_factory=lambda: PeriodicEuclidean(2, periodic=[False, True])
+    )
 
 
 # ----------------------------------- torus ---------------------------------- #
@@ -334,13 +346,17 @@ class Torus(AbstractManifold):
     """
 
     dim: int = 2
-    parameter_space: ParameterSpace = ParameterSpace(
-        [
-            Range(0, 2 * np.pi, periodic=True),
-            Range(0, 2 * np.pi, periodic=True),
-        ]
+    parameter_space: ParameterSpace = field(
+        default_factory=lambda: ParameterSpace(
+            [
+                Range(0, 2 * np.pi, periodic=True),
+                Range(0, 2 * np.pi, periodic=True),
+            ]
+        )
     )
-    metric: Metric = PeriodicEuclidean(dim, periodic=[True, True])
+    metric: Metric = field(
+        default_factory=lambda: PeriodicEuclidean(2, periodic=[True, True])
+    )
 
 
 # --------------------------------- mobius band --------------------------------- #
@@ -353,10 +369,12 @@ class MobiusBand(AbstractManifold):
     """
 
     dim: int = 2
-    parameter_space: ParameterSpace = ParameterSpace(
-        [Range(-2, 2, periodic=False), Range(0, 2 * np.pi, periodic=True)]
+    parameter_space: ParameterSpace = field(
+        default_factory=lambda: ParameterSpace(
+            [Range(-2, 2, periodic=False), Range(0, 2 * np.pi, periodic=True)]
+        )
     )
-    metric: Metric = MobiusEuclidean(T=2.0)
+    metric: Metric = field(default_factory=lambda: MobiusEuclidean(T=2.0))
 
 
 # ---------------------------------- sphere ---------------------------------- #
@@ -368,14 +386,16 @@ class Sphere(AbstractManifold):
     """
 
     dim: int = 3
-    parameter_space: ParameterSpace = SphereParameterSpace(
-        [
-            Range(-1, 1, periodic=False),
-            Range(-1, 1, periodic=False),
-            Range(-1, 1, periodic=False),
-        ]
+    parameter_space: ParameterSpace = field(
+        default_factory=lambda: SphereParameterSpace(
+            [
+                Range(-1, 1, periodic=False),
+                Range(-1, 1, periodic=False),
+                Range(-1, 1, periodic=False),
+            ]
+        )
     )
-    metric: Metric = SphericalDistance(dim)
+    metric: Metric = field(default_factory=lambda: SphericalDistance(3))
 
 
 # Dictionary of padding values for different manifold types
