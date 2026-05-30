@@ -293,6 +293,7 @@ def visualize_manifold(
     Returns:
         fig, ax: The matplotlib figure and axes with the plot
     """
+
     if mfld.dim == 1:
         f, ax = plt.subplots()
         mfld.visualize(ax)
